@@ -14,10 +14,11 @@ let weather = {
         const { speed } = data.wind;
         document.querySelector(".city").innerHTML = "Weather in " + name;
         document.querySelector(".description").innerText = description;
-        document.querySelector(".temp").innerText = temp + "°C";
+        document.querySelector(".temp").innerText = temp;
+        document.querySelector(".units").innerText = "°C";
         document.querySelector(".humidity").innerText = "Humidity: " + humidity + "%";
         document.querySelector(".wind").innerText = "Wind speed: " + speed + " km/h";
-        document.querySelector(".weather").classList.remove("loading")
+        document.querySelector(".weather").classList.remove("loading");
     },
     search: function() {
         this.fetchWeather(document.querySelector('.search-bar').value);
@@ -27,3 +28,16 @@ let weather = {
 document.querySelector('.search button').addEventListener('click', function() {
     weather.search();
 });
+
+// change units button
+document.querySelector(".change-units-button").addEventListener('click', function() {
+    let currentTemp = document.querySelector(".temp").innerText;
+    let currentUnits = document.querySelector(".units").innerText;
+    if (currentUnits.charAt(currentUnits.length - 1) === "C") {
+        document.querySelector(".temp").innerText = parseFloat(((currentTemp * 1.8) + 32)).toFixed(2);
+        document.querySelector(".units").innerText = "°F";
+    } else if (currentUnits.charAt(currentUnits.length - 1) === "F") {
+        document.querySelector(".temp").innerText = parseFloat(((currentTemp - 32) / 1.8)).toFixed(2);
+        document.querySelector(".units").innerText = "°C";
+    }
+})
